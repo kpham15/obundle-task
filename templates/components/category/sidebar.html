@@ -59,16 +59,18 @@
                     optionValue: 95
                   }
                 ]
+              },
+              {
+                quantity: 1,
+                productId: 86
+              },
+              {
+                quantity:1,
+                productId: 103
               }
             ]
           })
-            .then(data =>
-              $.get("/cart.php?action=add&product_id=86", function(data) {
-                $.get("/cart.php?action=add&product_id=103", function(data) {
-                  window.location = "/cart.php";
-                });
-              })
-            )
+            .then(data => window.location = "/cart.php")
             .catch(error => console.error(error));
       
           // Adds item with options to cart
