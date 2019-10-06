@@ -1,20 +1,92 @@
 <nav>
-    {{#if category.subcategories}}
-        <div class="sidebarBlock">
-            <h5 class="sidebarBlock-heading">{{category.name}}</h5>
-            <ul class="navList">
-                {{#each category.subcategories}}
-                <li class="navList-item">
-                    <a class="navList-action" href="{{url}}" alt="{{name}}" title="{{name}}">{{name}}</a>
-                </li>
-                {{/each}}
-            </ul>
-        </div>
-    {{/if}}
+  {{#if category.subcategories}}
+  <div class="sidebarBlock">
+    <h5 class="sidebarBlock-heading">{{ category.name }}</h5>
+    <ul class="navList">
+      {{#each category.subcategories}}
+      <li class="navList-item">
+        <a
+          class="navList-action"
+          href="{{ url }}"
+          alt="{{ name }}"
+          title="{{ name }}"
+          >{{ name }}</a
+        >
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+  {{/if}}
 
-    {{#if category.faceted_search_enabled}}
-        {{> components/faceted-search/index category}}
-    {{else}}
-        {{> components/category/shop-by-price shop_by_price=category.shop_by_price category_url=category.url}}
-    {{/if}}
+  {{!--Task 1 - Add sidebar with categories--}}
+  <div class="sidebarBlock">
+    {{!-- Task 2 - Add Button that will add 3 products to cart --}}
+    <div>
+      <button type="button" class="button button--icon" id="add3ToCart">
+        Add 3 Items
+      </button>
+    </div>
+    <h5 class="sidebarBlock-head">Navigation</h5>
+    <ul class="navList">
+      {{#each categories}}
+      <li class="navList-item">
+        <a class="navList-action" href="{{ url }}" title="{{ name }}">{{
+          name
+        }}</a>
+      </li>
+      {{/each}}
+    </ul>
+  </div>
+
+  {{#if category.faceted_search_enabled}}
+  {{> components/faceted-search/index category}}
+  {{else}}
+  {{> components/category/shop-by-price shop_by_price=category.shop_by_price category_url=category.url}}
+  {{/if}}
 </nav>
+
+<script>
+  // Button Click Event Handler
+  // Adds 1 item with options and then 2 items without options
+  // Then takes user to cart to view the items
+  $("#add3ToCart").click(function() {
+    postData(`/api/storefront/cart`, {
+      lineItems: [
+        {
+          quantity: 1,
+          productId: 93,
+          optionSelections: [
+            {
+              optionId: 111,
+              optionValue: 7
+            },
+            {
+              optionId: 112,
+              optionValue: 95
+            }
+          ]
+        }
+      ]
+    })
+      .then(data =>
+        $.get("/cart.php?action=add&product_id=86", function(data) {
+          $.get("/cart.php?action=add&product_id=103", function(data) {
+            window.location = "/cart.php";
+          });
+        })
+      )
+      .catch(error => console.error(error));
+
+    // Adds item with options to cart
+    function postData(url = ``, cartItems = {}) {
+      return fetch(url, {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(cartItems)
+      }).then(response => response.json());
+    }
+  });
+</script>
