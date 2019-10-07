@@ -56,9 +56,9 @@ export default class Category extends CatalogPage {
                     },
                 ],
             })
-            .then(window.location = "/cart.php")
+            .then(data => window.location = '/cart.php')
             .catch(error => console.error(error));
-        })
+        });
     }
 
     initFacetedSearch() {
@@ -92,6 +92,4 @@ export default class Category extends CatalogPage {
             }, 100);
         });
     }
-
-    
 }
