@@ -5,15 +5,16 @@ import FacetedSearch from './common/faceted-search';
 
 export default class Category extends CatalogPage {
 
-    postData(url = ``, cartItems = {}) {
+    postData(url = '', cartItems = {}) {
         return fetch(url, {
-          method: "POST",
-          credentials: "same-origin",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(cartItems)
-        }).then(response => response.json());
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cartItems),
+        })
+        .then(response => response.json());
     }
 
     onReady() {
@@ -26,37 +27,37 @@ export default class Category extends CatalogPage {
             hooks.on('sortBy-submitted', this.onSortBySubmit);
         }
 
-        $('#add3ToCart'). on('click', event => {
+        $('#add3ToCart').on('click', event => {
             event.isDefaultPrevented();
 
-            this.postData(`/api/storefront/cart`, {
+            this.postData('/api/storefront/cart', {
                 lineItems: [
-                  {
-                    quantity: 1,
-                    productId: 93,
-                    optionSelections: [
-                      {
-                        optionId: 111,
-                        optionValue: 7
-                      },
-                      {
-                        optionId: 112,
-                        optionValue: 95
-                      }
-                    ]
-                  },
-                  {
-                    quantity: 1,
-                    productId: 86
-                  },
-                  {
-                    quantity:1,
-                    productId: 103
-                  }
-                ]
-              })
-                .then(data => window.location = "/cart.php")
-                .catch(error => console.error(error));
+                    {
+                        quantity: 1,
+                        productId: 93,
+                        optionSelections: [
+                            {
+                                optionId: 111,
+                                optionValue: 7,
+                            },
+                            {
+                                optionId: 112,
+                                optionValue: 95,
+                            },
+                        ],
+                    },
+                    {
+                        quantity: 1,
+                        productId: 86,
+                    },
+                    {
+                        quantity: 1,
+                        productId: 103,
+                    },
+                ],
+            })
+            .then(window.location = "/cart.php")
+            .catch(error => console.error(error));
         })
     }
 
