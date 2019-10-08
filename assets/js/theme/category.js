@@ -5,8 +5,8 @@ import FacetedSearch from './common/faceted-search';
 
 export default class Category extends CatalogPage {
 
-    postData(url = '', cartItems = {}) {
-        return fetch(url, {
+    async postData(url = '', cartItems = {}) {
+        let res = await fetch(url, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
@@ -14,22 +14,10 @@ export default class Category extends CatalogPage {
             },
             body: JSON.stringify(cartItems),
         })
-        .then(response => response.json());
+
+        let response = await (window.location = '/cart.php');
+        return response;
     }
-
-    // async postData(url = '', cartItems = {}) {
-    //     let res = await fetch(url, {
-    //         method: 'POST',
-    //         credentials: 'same-origin',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(cartItems),
-    //     })
-
-    //     let json = await res.json();
-    //     return json;
-    // }
 
     onReady() {
         compareProducts(this.context.urls);
@@ -70,8 +58,6 @@ export default class Category extends CatalogPage {
                     },
                 ],
             })
-            // .then(data => console.log(data))
-            .then(window.location = '/cart.php')
             .catch(error => console.error(error));
         });
     }
