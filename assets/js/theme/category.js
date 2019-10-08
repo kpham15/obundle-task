@@ -5,8 +5,20 @@ import FacetedSearch from './common/faceted-search';
 
 export default class Category extends CatalogPage {
 
-    postData(url = '', cartItems = {}) {
-        return fetch(url, {
+    // async postData(url = '', cartItems = {}) {
+    //     return fetch(url, {
+    //         method: 'POST',
+    //         credentials: 'same-origin',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(cartItems),
+    //     })
+    //     .await(response => response.json());
+    // }
+
+    async postData(url = '', cartItems = {}) {
+        let res = await fetch(url, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
@@ -14,7 +26,9 @@ export default class Category extends CatalogPage {
             },
             body: JSON.stringify(cartItems),
         })
-        .then(response => response.json());
+
+        let json = await response.json();
+        return json;
     }
 
     onReady() {
@@ -56,7 +70,8 @@ export default class Category extends CatalogPage {
                     },
                 ],
             })
-            .then(data => window.location = '/cart.php')
+            // .then(data => console.log(data))
+            .then(window.location = '/cart.php')
             .catch(error => console.error(error));
         });
     }
