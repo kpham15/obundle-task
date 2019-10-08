@@ -6,16 +6,17 @@ import FacetedSearch from './common/faceted-search';
 export default class Category extends CatalogPage {
 
     async postData(url = '', cartItems = {}) {
-        let res = await fetch(url, {
+        const res = await fetch(url, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(cartItems),
-        })
+        });
 
-        let response = await (window.location = '/cart.php');
+        console.log(res);
+        const response = await (window.location = '/cart.php');
         return response;
     }
 
