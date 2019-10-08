@@ -5,18 +5,6 @@ import FacetedSearch from './common/faceted-search';
 
 export default class Category extends CatalogPage {
 
-    // async postData(url = '', cartItems = {}) {
-    //     return fetch(url, {
-    //         method: 'POST',
-    //         credentials: 'same-origin',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(cartItems),
-    //     })
-    //     .await(response => response.json());
-    // }
-
     async postData(url = '', cartItems = {}) {
         let res = await fetch(url, {
             method: 'POST',
